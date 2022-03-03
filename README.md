@@ -11,6 +11,8 @@ GO111MODULE=on go get -v github.com/projectdiscovery/simplehttpserver/cmd/simple
 simplehttpserver -listen 127.0.0.1:8000
 ```
 
+If you want to try it right now, please see live demo: [http://akkuman.github.io/sgn-html/](http://akkuman.github.io/sgn-html/)
+
 ## Implementation
 
 come soon...
