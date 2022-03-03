@@ -1,0 +1,106 @@
+<html>
+    <head>
+        <script src="static/keystone.min.js"></script>
+        <script src="static/wasm_exec.js"></script>
+        <script>
+            const go = new Go();
+            WebAssembly.instantiateStreaming(fetch("static/sgn.wasm"), go.importObject)
+                .then((result) => go.run(result.instance));
+        </script>
+    </head>
+    <body>
+        <h1>Sgn</h1>
+        <br/>
+        <b>generate origin shellcode example: "msfvenom -p windows/x64/exec CMD=calc.exe -f hex"</b>
+        <br/>
+        <br/>
+        <br/>
+        <span>Binary architecture (32/64): </span>
+        <select id="arch" name="arch">
+            <option value=64>x64</option>
+            <option value=32>x86</option>
+        </select>
+        <br/>
+        <br/>
+        <span>Number of times to encode the binary (increases overall size): </span>
+        <input id="encCount" type="number" value=1 />
+        <br/>
+        <br/>
+        <span>Maximum number of bytes for obfuscation: </span>
+        <input id="obsLevel" type="number" value=20 />
+        <br/>
+        <br/>
+        <span>Do not encode the decoder stub: </span>
+        <select id="encDecoder" name="encDecoder">
+            <option value=true>true</option>
+            <option value=false selected="selected">false</option>
+        </select>
+        <br/>
+        <br/>
+        <span>Generates a full ASCI printable payload (takes very long time to bruteforce): </span>
+        <select id="asciPayload" name="asciPayload">
+            <option value=true>true</option>
+            <option value=false selected="selected">false</option>
+        </select>
+        <br/>
+        <br/>
+        <span>Do not modify any register values: </span>
+        <select id="saveRegisters" name="saveRegisters">
+            <option value=true>true</option>
+            <option value=false selected="selected">false</option>
+        </select>
+        <br/>
+        <br/>
+        <span>Don't use specified bad characters given in hex format (\x00\x01\x02...): </span>
+        <input id="badChars" type="text" />
+        <br/>
+        <br/>
+        <span>shellcode: </span>
+        <input id="shellcode" type="text" />
+        <br/>
+        <br/>
+        <button id="btn" onclick="runSgn()">Run</button>
+        <p id="ans"></p>
+        <script>
+            function getArch() {
+                let e=document.getElementById("arch");
+                let index=e.selectedIndex;
+                return parseInt(e.options[index].value);
+            }
+            function getEncCount() {
+                return parseInt(document.getElementById('encCount').value);
+            }
+            function getObsLevel() {
+                return parseInt(document.getElementById('obsLevel').value);
+            }
+            function getIsEncDecoder() {
+                let e=document.getElementById("encDecoder");
+                let index=e.selectedIndex;
+                return e.options[index].value==='true';
+            }
+            function getIsAsciPayload() {
+                let e=document.getElementById("asciPayload");
+                let index=e.selectedIndex;
+                return e.options[index].value==='true';
+            }
+            function getIsSaveRegisters() {
+                let e=document.getElementById("saveRegisters");
+                let index=e.selectedIndex;
+                return e.options[index].value==='true';
+            }
+            function getBadChars() {
+                return document.getElementById('badChars').value.trim();
+            }
+            function getShellcode() {
+                return document.getElementById('shellcode').value.trim();
+            }
+            function runSgn() {
+                let result = sgnFunc(getArch(), getEncCount(), getObsLevel(), getIsEncDecoder(), getIsAsciPayload(), getIsSaveRegisters(), getBadChars(), getShellcode());
+                let data = result['result'];
+                let err = result['err'];
+                document.getElementById('ans').innerHTML = data;
+            }
+        </script>
+    </body>
+
+</html>
