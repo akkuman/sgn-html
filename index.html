@@ -4,8 +4,11 @@
         <script src="static/wasm_exec.js"></script>
         <script>
             const go = new Go();
-            WebAssembly.instantiateStreaming(fetch("static/sgn.wasm"), go.importObject)
-                .then((result) => go.run(result.instance));
+            WebAssembly.instantiateStreaming(fetch("static/sgn.wasm"), go.importObject).then((result) => {
+                go.run(result.instance);
+                document.getElementById('runButton').textContent = 'Run';
+                document.getElementById("runButton").disabled = false;
+            });
         </script>
     </head>
     <body>
@@ -59,7 +62,7 @@
         <input id="shellcode" type="text" />
         <br/>
         <br/>
-        <button id="btn" onclick="runSgn()">Run</button>
+        <button id="runButton" onclick="runSgn()" disabled>Loading...</button>
         <p id="ans"></p>
         <script>
             function getArch() {
