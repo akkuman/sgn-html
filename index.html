@@ -63,7 +63,9 @@
         <br/>
         <br/>
         <button id="runButton" onclick="runSgn()" disabled>Loading...</button>
-        <p id="ans"></p>
+        <br/>
+        <br/>
+        <textarea id="encShellcode" name="textarea" rows="12" cols="100"></textarea>
         <script>
             function getArch() {
                 let e=document.getElementById("arch");
@@ -101,7 +103,7 @@
                 let result = sgnFunc(getArch(), getEncCount(), getObsLevel(), getIsEncDecoder(), getIsAsciPayload(), getIsSaveRegisters(), getBadChars(), getShellcode());
                 let data = result['result'];
                 let err = result['err'];
-                document.getElementById('ans').innerHTML = data;
+                document.getElementById('encShellcode').value = data;
             }
         </script>
     </body>
