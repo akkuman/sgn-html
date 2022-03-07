@@ -23,7 +23,7 @@ Instead of calling cgo from sgn, keystone wasm is called from syscall/js
 
 Now sgn becomes a pure go project and exposes the interface to js and compiles to wasm
 
-
+more details: [github.com/akkuman/sgn](https://github.com/akkuman/sgn)
 
 ## Reference
 
