@@ -2,6 +2,7 @@
     <head>
         <script src="static/keystone.min.js"></script>
         <script src="static/wasm_exec.js"></script>
+        <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
         <script>
             const go = new Go();
             WebAssembly.instantiateStreaming(fetch("static/sgn.wasm"), go.importObject).then((result) => {
